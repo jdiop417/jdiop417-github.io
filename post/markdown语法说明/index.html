@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Markdown 语法说明 - 三线码农</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jdiop" /><meta name="description" content="首先我们一起来看一下它的「定义」： Markdown 是一种轻量级标记语言，创始人为 John Gruber。它允许人们「使用易读易写的纯文本格式编写文档，然后转换成有" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.3 with theme even" />
+
+
+<link rel="canonical" href="https://jdiop417.github.io/post/markdown%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.92d6f5a8.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Markdown 语法说明" />
+<meta property="og:description" content="首先我们一起来看一下它的「定义」： Markdown 是一种轻量级标记语言，创始人为 John Gruber。它允许人们「使用易读易写的纯文本格式编写文档，然后转换成有" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jdiop417.github.io/post/markdown%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/" />
+<meta property="article:published_time" content="2019-12-29T11:20:49+08:00" />
+<meta property="article:modified_time" content="2019-12-29T11:20:49+08:00" />
+<meta itemprop="name" content="Markdown 语法说明">
+<meta itemprop="description" content="首先我们一起来看一下它的「定义」： Markdown 是一种轻量级标记语言，创始人为 John Gruber。它允许人们「使用易读易写的纯文本格式编写文档，然后转换成有">
+<meta itemprop="datePublished" content="2019-12-29T11:20:49&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-29T11:20:49&#43;08:00" />
+<meta itemprop="wordCount" content="4054">
+
+
+
+<meta itemprop="keywords" content="technical," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Markdown 语法说明"/>
+<meta name="twitter:description" content="首先我们一起来看一下它的「定义」： Markdown 是一种轻量级标记语言，创始人为 John Gruber。它允许人们「使用易读易写的纯文本格式编写文档，然后转换成有"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jdiop</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Jdiop</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Markdown 语法说明</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-12-29 </span>
+        
+          <span class="more-meta"> 4054 words </span>
+          <span class="more-meta"> 9 mins read </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a>
+      <ul>
+        <li><a href="#优点">优点</a></li>
+        <li><a href="#使用场景">使用场景</a></li>
+        <li><a href="#编辑工具">编辑工具</a></li>
+      </ul>
+    </li>
+    <li><a href="#语法">语法</a>
+      <ul>
+        <li><a href="#标题">标题</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#二级标题">二级标题</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#二级标题-1">二级标题</a>
+      <ul>
+        <li><a href="#段落">段落</a></li>
+        <li><a href="#行内格式">行内格式</a></li>
+        <li><a href="#引用块">引用块</a></li>
+        <li><a href="#引用块内的标题">引用块内的标题</a></li>
+        <li><a href="#超链接">超链接</a></li>
+        <li><a href="#图片">图片</a></li>
+        <li><a href="#列表">列表</a></li>
+        <li><a href="#代码块">代码块</a></li>
+        <li><a href="#水平分割线">水平分割线</a></li>
+        <li><a href="#嵌入-html">嵌入 HTML</a></li>
+      </ul>
+    </li>
+    <li><a href="#扩展语法">扩展语法</a>
+      <ul>
+        <li><a href="#表格">表格</a></li>
+        <li><a href="#任务列表">任务列表</a></li>
+        <li><a href="#删除线">删除线</a></li>
+        <li><a href="#自动链接">自动链接</a></li>
+        <li><a href="#emoji">emoji</a></li>
+      </ul>
+    </li>
+    <li><a href="#奇技淫巧">奇技淫巧</a>
+      <ul>
+        <li><a href="#画流程图和时序图">画流程图和时序图</a></li>
+        <li><a href="#插入数学公式">插入数学公式</a></li>
+        <li><a href="#用-markdown-做-ppt">用 Markdown 做 PPT</a></li>
+        <li><a href="#更多">更多</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>首先我们一起来看一下它的「定义」：</p>
+<blockquote>
+<p>Markdown 是一种轻量级标记语言，创始人为 John Gruber。它允许人们「使用易读易写的纯文本格式编写文档，然后转换成有效的 XHTML（或者 HTML）文档」。——维基百科</p>
+</blockquote>
+<p>本文档的目的不在于面面俱到地介绍 Markdown，只是作为我对其理解的笔记整理，希望能同时帮助一些对 Markdown 感兴趣的人快速上手，或是作为一个工具，供对其已经有所了解的人在需要时参考。</p>
+<p>接下来请随我一起深入了解这门并不神秘的实用标记语言。</p>
+<h2 id="背景">背景</h2>
+<h3 id="优点">优点</h3>
+<ol>
+<li>
+<p>专注于文字内容；</p>
+</li>
+<li>
+<p>纯文本，易读易写，可以方便地纳入版本控制；</p>
+</li>
+<li>
+<p>语法简单，没有什么学习成本，能轻松在码字的同时做出美观大方的排版。</p>
+</li>
+</ol>
+<h3 id="使用场景">使用场景</h3>
+<ul>
+<li>
+<p>各类代码托管平台</p>
+<p>主流的代码托管平台，如 GitHub、GitLab、BitBucket、Coding、Gitee 等等，都支持 Markdown 语法，很多开源项目的 README、开发文档、帮助文档、Wiki 等都用 Markdown 写作。</p>
+</li>
+<li>
+<p>技术社区和写作平台</p>
+<p>StackOverflow、CSDN、掘金、简书、GitBook、有道云笔记</p>
+</li>
+<li>
+<p>论坛</p>
+<p>V2EX、光谷社区</p>
+</li>
+</ul>
+<p>个人感觉比较遗憾的一点是各平台可能采用不同语言实现的 Markdown 解析引擎，或采用同一解析引擎的不同版本，而且可能有不同程度的定制与扩展，这导致在不同平台上使用 Markdown 写作时体验并不完全一致。不过幸好对于大家公认的一些标准语法，各家都是支持的。</p>
+<h3 id="编辑工具">编辑工具</h3>
+<p>理论上任何一款文本编辑器都能用于编辑 Markdown 文档，它们分别提供了不同程度的语法高亮、预览等功能，以下只是列举其中一部分，选择自己称手的即可。</p>
+<ul>
+<li>
+<p>现代编辑器</p>
+<p>VSCode / Atom</p>
+</li>
+<li>
+<p>传统编辑器</p>
+<p>Vim / Emacs / Sublime Text / Notepad++</p>
+</li>
+<li>
+<p>IDE 自带编辑器</p>
+<p>IntelliJ IDEA / Android Studio / WebStorm</p>
+</li>
+<li>
+<p>专用编辑器</p>
+<p>Ulysses / Mou / Typora / Markpad</p>
+</li>
+<li>
+<p>在线编辑器</p>
+<p>各种支持 Markdown 的网站都提供了在线编辑器</p>
+</li>
+</ul>
+<h2 id="语法">语法</h2>
+<h3 id="标题">标题</h3>
+<p><strong>Markdown：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># atx-style 一级标题
+
+## 二级标题
+
+###### 六级标题
+
+Setext-style 一级标题
+===
+
+二级标题
+---
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>预览效果：</strong></p>
+<blockquote>
+<h1 id="atx-style-一级标题">atx-style 一级标题</h1>
+<h2 id="二级标题">二级标题</h2>
+<h6 id="六级标题">六级标题</h6>
+<h1 id="setext-style-一级标题">Setext-style 一级标题</h1>
+<h2 id="二级标题-1">二级标题</h2>
+</blockquote>
+<p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>atx-style 一级标题<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>二级标题<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">h6</span><span class="p">&gt;</span>六级标题<span class="p">&lt;/</span><span class="nt">h6</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Setext-style 一级标题<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>二级标题<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="段落">段落</h3>
+<p>中间没有空行的连续不断的几行文字被视为一个段落。</p>
+<p><strong>Markdown：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">白日依山尽，
+
+黄河入海流。
+（句号后面没空格）
+
+欲穷千里目，
+
+更上一层楼。  
+（句号后面有俩空格）
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>预览效果：</strong></p>
+<p>白日依山尽，</p>
+<p>黄河入海流。
+（句号后面没空格）</p>
+<p>欲穷千里目，</p>
+<p>更上一层楼。<br>
+（句号后面有俩空格）</p>
+<p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>白日依山尽，<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>黄河入海流。
+（句号后面没有空格）<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>欲穷千里目，<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+  更上一层楼。
+  <span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+  （句号后面有俩空格）
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="行内格式">行内格式</h3>
+<p>对段落或者部分文本的强调效果。</p>
+<p><strong>Markdown：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">后面俩字**加黑**
+
+后面俩字*斜体*
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>预览效果：</strong></p>
+<p>后面俩字<strong>加黑</strong></p>
+<p>后面俩字<em>斜体</em></p>
+<p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+  后面俩字
+  <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>加黑<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+  后面俩字
+  <span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>斜体<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="引用块">引用块</h3>
+<p><strong>Markdown：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&gt; 引用块段落一。
+&gt;
+&gt; 引用块段落二。
+&gt;&gt; 内嵌引用块段落一。
+&gt;
+&gt; ### 引用块内的标题
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>预览效果：</strong></p>
+<blockquote>
+<p>引用块段落一。</p>
+<p>引用块段落二。</p>
+<blockquote>
+<p>内嵌引用块段落一。</p>
+</blockquote>
+<h3 id="引用块内的标题">引用块内的标题</h3>
+</blockquote>
+<p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">blockquote</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>引用块段落一。<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>引用块段落二。<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">blockquote</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>内嵌引用块段落一。<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">blockquote</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h3</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;引用块内的标题&#34;</span><span class="p">&gt;</span>引用块内的标题<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">blockquote</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="超链接">超链接</h3>
+<p>Markdown 支持行内式链接和引用式链接。</p>
+<p><strong>Markdown：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">行内式 [博客](https://mazhuang.org &#34;我的个人博客&#34;) 链接，带 title。
+
+行内式 [GitHub](https://github.com/mzlogin) 链接。
+
+引用式 [博客][1] 链接。
+
+引用式 [GitHub][2] 链接，带 title。
+
+[1]: https://mazhuang.org
+[2]: https://github.com/mzlogin &#34;我的 GitHub 主页&#34;
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>预览效果：</strong></p>
+<p>行内式 <a href="https://mazhuang.org" title="我的个人博客">博客</a> 链接，带 title。</p>
+<p>行内式 <a href="https://github.com/mzlogin">GitHub</a> 链接。</p>
+<p>引用式 <a href="https://mazhuang.org">博客</a> 链接。</p>
+<p>引用式 <a href="https://github.com/mzlogin" title="我的 GitHub 主页">GitHub</a> 链接，带 title。</p>
+<p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>行内式 <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;https://mazhuang.org&#34;</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;我的个人博客&#34;</span><span class="p">&gt;</span>博客<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> 链接，带 title。<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>行内式 <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;https://github.com/mzlogin&#34;</span><span class="p">&gt;</span>GitHub<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> 链接。<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>引用式 <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;https://mazhuang.org&#34;</span><span class="p">&gt;</span>博客<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> 链接。<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>引用式 <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;https://github.com/mzlogin&#34;</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;我的 GitHub 主页&#34;</span><span class="p">&gt;</span>GitHub<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> 链接，带 title。<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="图片">图片</h3>
+<p>在超链接的写法前加一个 <code>!</code>，就是引用图片的方法。</p>
+<p><strong>Markdown：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">![Alt text](https://mazhuang.org/favicon.ico &#34;favicon&#34;)
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>预览效果：</strong></p>
+<p><img src="https://mazhuang.org/favicon.ico" alt="Alt text" title="favicon"></p>
+<p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://mazhuang.org/favicon.ico&#34;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&#34;Alt text&#34;</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;favicon&#34;</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="列表">列表</h3>
+<p>包括有序列表和无序列表。</p>
+<p><strong>Markdown：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">- 苹果
+- 葡萄
+- 榴莲
+
+1. 苹果
+2. 葡萄
+3. 榴莲
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>预览效果：</strong></p>
+<ul>
+<li>苹果</li>
+<li>葡萄</li>
+<li>榴莲</li>
+</ul>
+<ol>
+<li>苹果</li>
+<li>葡萄</li>
+<li>榴莲</li>
+</ol>
+<p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>苹果<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>葡萄<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>榴莲<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">ol</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>苹果<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>葡萄<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>榴莲<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ol</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其中无序列表的标记可以使用 <code>+</code>、<code>-</code> 或 <code>*</code>，有序列表前的数字可以是乱序的。</p>
+<h3 id="代码块">代码块</h3>
+<p>支持行内代码和代码块。</p>
+<p><strong>Markdown：</strong></p>
+<pre><code>Android 里使用 `TextUtils` 类的 `isEmpty` 方法来判断字符串是否为空。
+
+```java
+if (TextUtils.isEmpty(text)) {
+    return null;
+}
+```
+</code></pre>
+<p><strong>预览效果：</strong></p>
+<p>Android 里使用 <code>TextUtils</code> 类的 <code>isEmpty</code> 方法来判断字符串是否为空。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="k">if</span> <span class="o">(</span><span class="n">TextUtils</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">text</span><span class="o">))</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Android 里使用 <span class="p">&lt;</span><span class="nt">code</span><span class="p">&gt;</span>TextUtils<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;</span> 类的 <span class="p">&lt;</span><span class="nt">code</span><span class="p">&gt;</span>isEmpty<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;</span> 方法来判断字符串是否为空。<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;highlight highlight-source-java&#34;</span><span class="p">&gt;&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;pl-k&#34;</span><span class="p">&gt;</span>if<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> (<span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;pl-smi&#34;</span><span class="p">&gt;</span>TextUtils<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;pl-k&#34;</span><span class="p">&gt;</span>.<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>isEmpty(text)) {
+    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;pl-k&#34;</span><span class="p">&gt;</span>return<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;pl-c1&#34;</span><span class="p">&gt;</span>null<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>;
+}<span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上例中的语言标记 <code>java</code> 可选填，可用于在编辑器和渲染后的效果里添加语法高亮。</p>
+<p>块式代码也可以对整个代码段缩进四个空格，或一个 Tab 来实现。</p>
+<h3 id="水平分割线">水平分割线</h3>
+<p>使用一个单独行里的三个或以上 <code>*</code>、<code>-</code> 来生产一条水平分割线，它们之间可以有空格。</p>
+<p><strong>Markdown：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">***
+
+-----
+
+- - -
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>预览效果：</strong></p>
+<hr>
+<hr>
+<hr>
+<p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="嵌入-html">嵌入 HTML</h3>
+<p>Markdown 标记语言的目的不是替代 HTML，也不是发明一种更便捷的插入 HTML 标签的方式。它对应的只是 HTML 标签的一个很小的子集。</p>
+<p>对于那些没有办法用 Markdown 语法来对应的 HTML 标签，直接使用 HTML 来写就好了。</p>
+<h2 id="扩展语法">扩展语法</h2>
+<p>本节的内容是介绍一些受到广泛支持的 Markdown 扩展语法。</p>
+<h3 id="表格">表格</h3>
+<p><strong>Markdown：</strong></p>
+<pre><code>| 编号  | 姓名（左） | 年龄（右） | 性别（中） |
+| ----- | :--------  | ---------: | :------:   |
+| 0     | 张三       | 28         | 男         |
+| 1     | 李四       | 29         | 男         |
+</code></pre>
+<p><strong>预览效果：</strong></p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th align="left">姓名（左）</th>
+<th align="right">年龄（右）</th>
+<th align="center">性别（中）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td align="left">张三</td>
+<td align="right">28</td>
+<td align="center">男</td>
+</tr>
+<tr>
+<td>1</td>
+<td align="left">李四</td>
+<td align="right">29</td>
+<td align="center">男</td>
+</tr>
+</tbody>
+</table>
+<p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">table</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>编号<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">th</span> <span class="na">align</span><span class="o">=</span><span class="s">&#34;left&#34;</span><span class="p">&gt;</span>姓名（左）<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">th</span> <span class="na">align</span><span class="o">=</span><span class="s">&#34;right&#34;</span><span class="p">&gt;</span>年龄（右）<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">th</span> <span class="na">align</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>性别（中）<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>0<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span> <span class="na">align</span><span class="o">=</span><span class="s">&#34;left&#34;</span><span class="p">&gt;</span>张三<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span> <span class="na">align</span><span class="o">=</span><span class="s">&#34;right&#34;</span><span class="p">&gt;</span>28<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span> <span class="na">align</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>男<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>1<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span> <span class="na">align</span><span class="o">=</span><span class="s">&#34;left&#34;</span><span class="p">&gt;</span>李四<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span> <span class="na">align</span><span class="o">=</span><span class="s">&#34;right&#34;</span><span class="p">&gt;</span>29<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span> <span class="na">align</span><span class="o">=</span><span class="s">&#34;center&#34;</span><span class="p">&gt;</span>男<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="任务列表">任务列表</h3>
+<p>在 GitHub / GitLab 里有较好的支持。</p>
+<p><strong>Markdown：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">- [x] 洗碗
+- [ ] 清洗油烟机
+- [ ] 拖地
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>预览效果：</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 洗碗</li>
+<li><input disabled="" type="checkbox"> 清洗油烟机</li>
+<li><input disabled="" type="checkbox"> 拖地</li>
+</ul>
+<p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;contains-task-list&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;task-list-item&#34;</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;checkbox&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="na">disabled</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;task-list-item-checkbox&#34;</span> <span class="na">checked</span><span class="o">=</span><span class="s">&#34;&#34;</span><span class="p">&gt;</span> 洗碗<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;task-list-item&#34;</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;checkbox&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="na">disabled</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;task-list-item-checkbox&#34;</span><span class="p">&gt;</span> 清洗油烟机<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;task-list-item&#34;</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;checkbox&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="na">disabled</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;task-list-item-checkbox&#34;</span><span class="p">&gt;</span> 拖地<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果是在 GitHub / GitLab 的 Issue 里，会附赠任务完成比例提示效果：</p>
+<p><img src="/img/task-list-1.png" alt="task list 1"></p>
+<p>还可以直接在网页上拖动调整顺序，勾选和取消勾选。</p>
+<p><img src="/img/task-list-2.png" alt="task list 2"></p>
+<h3 id="删除线">删除线</h3>
+<p><strong>Markdown：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">后面三个字打上~~删除线~~。
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>预览效果：</strong></p>
+<p>后面三个字打上<del>删除线</del>。</p>
+<p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>后面三个字打上<span class="p">&lt;</span><span class="nt">del</span><span class="p">&gt;</span>删除线<span class="p">&lt;/</span><span class="nt">del</span><span class="p">&gt;</span>。<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="自动链接">自动链接</h3>
+<p>自动链接扩展，即：当识别到 URL，或用 <code>&lt;</code>、<code>&gt;</code> 包括的 URL 时，会自动为其生成 <code>a</code> 标签。</p>
+<p><strong>Markdown：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://github.com
+
+&lt;example@gmail.com&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>预览效果：</strong></p>
+<p><a href="https://github.com">https://github.com</a></p>
+<p><a href="mailto:example@gmail.com">example@gmail.com</a></p>
+<p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;https://github.com&#34;</span><span class="p">&gt;</span>https://github.com<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;mailto:example@gmail.com&#34;</span><span class="p">&gt;</span>example@gmail.com<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="emoji">emoji</h3>
+<p>以 GitHub Pages 为例。</p>
+<p><strong>Markdown：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">🐪 😊 😄
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>预览效果：</strong></p>
+<p>🐪 😊 😄</p>
+<p><strong>对应 HTML：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">img</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;emoji&#34;</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;🐪&#34;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&#34;🐪&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://assets-cdn.github.com/images/icons/emoji/unicode/1f42b.png&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;20&#34;</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;20&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">img</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;emoji&#34;</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;😊&#34;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&#34;😊&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://assets-cdn.github.com/images/icons/emoji/unicode/1f60a.png&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;20&#34;</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;20&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">img</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;emoji&#34;</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;😄&#34;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&#34;😄&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://assets-cdn.github.com/images/icons/emoji/unicode/1f604.png&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;20&#34;</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;20&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="奇技淫巧">奇技淫巧</h2>
+<p>脑洞清奇的工程师们还发掘了很多使用 Markdown 的方法，大部分都是引入第三方 JavaScript 插件来实现。对这部分我只做简述，对其中的部分功能比如作图等，还是推荐用专门的可视化工具去做。</p>
+<h3 id="画流程图和时序图">画流程图和时序图</h3>
+<p>有部分网站和编辑器实现了对 Markdown 里流程图和时序图的支持，比如我们使用的项目管理工具 TAPD 的在线编辑器，还有 VSCode + 插件 Markdown Preview Enhanced 等。</p>
+<p>以我们使用的项目管理工具 TAPD 的在线编辑器为例：</p>
+<p><img src="/img/tapd-markdown-flowchart.png" alt="流程图"></p>
+<p><img src="/img/tapd-markdown-seq.png" alt="时序图"></p>
+<h3 id="插入数学公式">插入数学公式</h3>
+<p>仍然以 TAPD 为例：</p>
+<p><img src="/img/tapd-markdown-math.png" alt="数学公式"></p>
+<p>应该是利用 JavaScript 支持了 LaTeX 公式语法。</p>
+<h3 id="用-markdown-做-ppt">用 Markdown 做 PPT</h3>
+<p>有专门的工具 <a href="https://github.com/yhatt/marp">Marp</a>，另外使用 VSCode + 插件 Markdown Preview Enhanced 也可以实现。</p>
+<h3 id="更多">更多</h3>
+<p>想象力丰富的工程师们还扩展了很多基于 Markdown 的玩法，包括但不限于：</p>
+<ul>
+<li>自动生成 / 更新 Table of Contents</li>
+<li>流程图 / 时序图</li>
+<li>制作幻灯片</li>
+<li>集成 PlantUML / GraphViz 的能力</li>
+<li>导出 HTML / PDF / 电子书</li>
+<li>&hellip;</li>
+</ul>
+<p>以上功能基本都可以用 VSCode + 插件 Markdown Preview Enhanced 实现。</p>
+<p>另外可以参考我以前的一篇博客 <a href="https://mazhuang.org/2017/09/01/markdown-odd-skills/">关于 Markdown 的一些奇技淫巧</a>。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://daringfireball.net/projects/markdown/syntax">Markdown: Syntax - DARING FIREBALL</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/Markdown">Markdown - 维基百科</a></li>
+<li><a href="https://github.github.com/gfm/">GitHub Flavored Markdown Spec</a></li>
+<li><a href="https://mazhuang.org/2017/09/01/markdown-odd-skills/">关于 Markdown 的一些奇技淫巧</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Jdiop</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-12-29
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/technical/">technical</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E8%A3%85%E4%BA%86%E5%95%A5/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">装了啥</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/git-submodule%E5%9C%A8blog%E4%B8%AD%E4%BD%BF%E7%94%A8/">
+            <span class="next-text nav-default">Git submodule在blog中使用</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:jdiop417@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/jdiop417" class="iconfont icon-github" title="github"></a>
+  <a href="https://jdiop417.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jdiop</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

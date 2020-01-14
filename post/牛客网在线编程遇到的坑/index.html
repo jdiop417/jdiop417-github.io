@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.69.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>牛客网在线编程遇到的坑&nbsp;&ndash;&nbsp;jdiop&#39;blog</title><link rel="stylesheet" href="/css/core.min.96c00237413bedc5f3b4492ac3a19d4c4ca67cd2d17cb537ae443bdf32e8ac1ec15c2d5bbc83854baa211b076bae2cd1.css" integrity="sha384-lsACN0E77cXztEkqw6GdTEymfNLRfLU3rkQ73zLorB7BXC1bvIOFS6ohGwdrrizR"><body>
+    <div class="base-body"><section id="header" class="site header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">jdiop'blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about/">About</a></nav></div></span></div></section><div id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">牛客网在线编程遇到的坑</h1><p class="article date">Mar 28, 2020</p></section><article class="article markdown-body"><p>笔者近期机考，题目是牛客网上的一道算法题。只有一题。懒人可直接看总结。</p>
+<h2 id="题目">题目</h2>
+<p>题目是这样的：
+【抢票系统】输入年月日时分秒，输出多少人能抢到票;
+规则:
+(1) 同一秒内，若时间不同，选最早的，若存在时间相同，选择多个;
+(2) 不同时间，选则时间最早的;</p>
+<p>输入描述:</p>
+<pre><code>n行字符串
+</code></pre><p>输出描述:</p>
+<pre><code>整数
+</code></pre><p>示例1:
+输入</p>
+<pre><code>1992-08-20 12:12:12.001
+1992-08-20 12:12:12.003
+1992-08-20 12:12:12.203
+1992-08-21 12:12:12.001 
+</code></pre><p>输出</p>
+<pre><code>2
+</code></pre><h2 id="分析">分析</h2>
+<p>题目一看不难。然后发现给出的示例和规则不符，规则2是不同时间选最早的，时间最早的是1992-08-20 12:12:12.001。输出该为1，实际输出为2。示例的分明是按日期来的，找到当天抢票数，然后累加的。幸好前一天准备一下，刷了牛客网的题。知道这种情况按示例的来。那么规则就改一下：
+规则:
+(1) 同一秒内，若时间不同，选最早的，若存在时间相同，选择多个;
+(2) 同一天内，选则时间最早的;
+(3) 所有天数累加；</p>
+<p>解题思路是按日期分组，然后选择每天内时间最小的，时间相同都选。最后累加。</p>
+<h2 id="做题">做题</h2>
+<p>最开始代码如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.Collectors</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">params</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">Scanner</span> <span class="n">scanner</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">scanner</span><span class="o">.</span><span class="na">hasNextLine</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">params</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">scanner</span><span class="o">.</span><span class="na">nextLine</span><span class="o">());</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">test</span><span class="o">(</span><span class="n">params</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">test</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">strs</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">strs</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">strs</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">0</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;&gt;</span> <span class="n">collect</span> <span class="o">=</span> <span class="n">strs</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">s</span> <span class="o">-&gt;</span> <span class="n">s</span><span class="o">.</span><span class="na">trim</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">s</span> <span class="o">-&gt;</span> <span class="n">s</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">groupingBy</span><span class="o">(</span><span class="n">s</span> <span class="o">-&gt;</span> <span class="n">s</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="n">10</span><span class="o">)));</span>
+
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;&gt;</span> <span class="n">date</span> <span class="o">:</span> <span class="n">collect</span><span class="o">.</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">times</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span>
+            <span class="n">times</span><span class="o">.</span><span class="na">sort</span><span class="o">((</span><span class="n">o1</span><span class="o">,</span> <span class="n">o2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">o1</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">o2</span><span class="o">));</span>
+            <span class="n">String</span> <span class="n">mintime</span> <span class="o">=</span> <span class="n">times</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">time</span> <span class="o">:</span> <span class="n">times</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">time</span> <span class="o">==</span> <span class="n">mintime</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">count</span><span class="o">++;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p>尴尬的事情发生，怎么都不会执行到最后一步。算法本身是没有问题的，一直在调试输入输出。到最后也没有成功。只得草草交卷，结果得了0分。考试90分钟，30分钟做完，剩下的60分钟在调试OJ输入输出。🖕🏻🖕🏻🖕🏻</p>
+<h2 id="事后">事后</h2>
+<p>在牛客网评论取有一堆关于OJ（Online Judge）的评论，基本都是差评，牛客网也专门出一期关于OJ的使用。发现输入是多行数据情况下是要给行数，难道默认是示例的行数？谁能告诉我一下🤔。另一个办法是多行数据输入以空白行结束,自己也没试过，主要是没找到这样的题。</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"> <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">params</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">Scanner</span> <span class="n">scanner</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+        <span class="c1">//oj读取多行
+</span><span class="c1"></span>        <span class="c1">//以空白行结束输入
+</span><span class="c1"></span>        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">param</span> <span class="o">=</span> <span class="n">scanner</span><span class="o">.</span><span class="na">nextLine</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">param</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">param</span><span class="o">.</span><span class="na">trim</span><span class="o">().</span><span class="na">length</span><span class="o">()</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="n">params</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">param</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">test</span><span class="o">(</span><span class="n">params</span><span class="o">));</span>
+    <span class="o">}</span>
+</code></pre></div><h2 id="总结">总结</h2>
+<p>牛客在线编程遇到的坑：</p>
+<ul>
+<li>示例与题目不符，以示例为准</li>
+<li>输入默认的多行，不是会给出行数。不过会有例外。比如笔者这次，此时你只能自求多福</li>
+</ul></article><section class="article labels"><a class="category" href=/categories/life/>life</a><a class="tag" href=/tags/oj/>OJ</a></section></div><section class="article navigation"><p><a class="link" href="/post/%E4%B8%BA%E4%BB%80%E4%B9%88mybatis%E7%9A%84mapper%E6%B2%A1%E6%9C%89%E5%AE%9E%E7%8E%B0%E7%B1%BB/"><span class="li">&rarr;</span>为什么mybatis的mapper没有实现类</a></p></section></div><section id="footer" class="footer"><div class="footer-wrap">
+    <p class="copyright">©2020 Notepadium.</p>
+    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p>
+</div></section></div>
+</body>
+
+</html>

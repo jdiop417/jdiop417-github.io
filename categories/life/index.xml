@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>life on jdiop&#39;blog</title>
+    <link>/categories/life/</link>
+    <description>Recent content in life on jdiop&#39;blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>©2020 Notepadium.</copyright>
+    <lastBuildDate>Sat, 28 Mar 2020 12:32:47 +0800</lastBuildDate>
+    
+        <atom:link href="/categories/life/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>牛客网在线编程遇到的坑</title>
+      <link>/post/%E7%89%9B%E5%AE%A2%E7%BD%91%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A8%8B%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/</link>
+      <pubDate>Sat, 28 Mar 2020 12:32:47 +0800</pubDate>
+      
+      <guid>/post/%E7%89%9B%E5%AE%A2%E7%BD%91%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A8%8B%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/</guid>
+      <description>&lt;p&gt;笔者近期机考，题目是牛客网上的一道算法题。只有一题。懒人可直接看总结。&lt;/p&gt;
+&lt;h2 id=&#34;题目&#34;&gt;题目&lt;/h2&gt;
+&lt;p&gt;题目是这样的：
+【抢票系统】输入年月日时分秒，输出多少人能抢到票;
+规则:
+(1) 同一秒内，若时间不同，选最早的，若存在时间相同，选择多个;
+(2) 不同时间，选则时间最早的;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>装了啥</title>
+      <link>/post/%E8%A3%85%E4%BA%86%E5%95%A5/</link>
+      <pubDate>Tue, 14 Jan 2020 17:10:38 +0800</pubDate>
+      
+      <guid>/post/%E8%A3%85%E4%BA%86%E5%95%A5/</guid>
+      <description>职业:web后端开发 硬件:MacBook Pro 2018款 13英寸 8+256 乞丐版 开发工具 Intellij idea 装的插件有Free Mybatis Plugin 、JRebel for Intellij、Lo</description>
+      
+    </item>
+    
+  </channel>
+</rss>

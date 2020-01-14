@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.69.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Git submodule在blog中使用&nbsp;&ndash;&nbsp;jdiop&#39;blog</title><link rel="stylesheet" href="/css/core.min.96c00237413bedc5f3b4492ac3a19d4c4ca67cd2d17cb537ae443bdf32e8ac1ec15c2d5bbc83854baa211b076bae2cd1.css" integrity="sha384-lsACN0E77cXztEkqw6GdTEymfNLRfLU3rkQ73zLorB7BXC1bvIOFS6ohGwdrrizR"><body>
+    <div class="base-body"><section id="header" class="site header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">jdiop'blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about/">About</a></nav></div></span></div></section><div id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Git submodule在blog中使用</h1><p class="article date">Dec 28, 2019</p></section><article class="article markdown-body"><h2 id="背景">背景</h2>
+<p>​		 近期在搭建个人博客，准确的说是静态博客，采用的<a href="https://gohugo.io/"target="_blank">hugo</a> + <a href="https://pages.github.com/"target="_blank">GithubPages</a> ，在本地写md文章，hugo编译成静态博客。提交到github后，github后会自动发布。当然github得自己建一个仓库存放静态博客，那本地md文章怎么办呢？</p>
+<h2 id="解决过程">解决过程</h2>
+<p>​		在github已经建了一个仓库了，master分支是放静态博客的，那其他分支岂不是阔以放其他东西了？于是用hugo分支放md文章。使用中发现，每次写完文章（在hugo分支）发布时，都要切换到master分支。提交的东西还会有一个父文件夹，强迫症怎么能忍。要调试的话还得再来一次切分支的过程。弃之。</p>
+<p>于是读hugo官方文档，看看别人是怎么弄的。链接是<a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/"target="_blank">hosting-on-github</a> ，大概思路是建2个仓库，一个仓库放静态博客，一个仓库放md文章。重点来了，放md文章的仓库里面嵌套了放静态博客的仓库。怎么玩呢，就是<a href="https://github.blog/2016-02-01-working-with-submodules/"target="_blank">git submodule</a>。还贴心的给了一个发布脚本，md生成静态博客，推送到github。一条命令完成。</p>
+<h2 id="git--submodule用法简介">Git  submodule用法简介</h2>
+<h3 id="添加子仓库">添加子仓库</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git submodule  add <span class="o">[</span>-b &lt;branch&gt;<span class="o">]</span> &lt;repository&gt; <span class="o">[</span>&lt;path&gt;<span class="o">]</span>
+</code></pre></div><p>​		父仓库添加子仓库后，子仓库会有一个图标提示。点击会跳转到相应的子仓库。同时也会多一个.gitmodules文件</p>
+<p><a target="_blank" rel="noopener noreferrer" 
+  href="https://github.blog/wp-content/uploads/2016/02/ce5590e2-c516-11e5-803b-116c5ac2d2b5.png?resize=1490%2C324"><img  src="https://github.blog/wp-content/uploads/2016/02/ce5590e2-c516-11e5-803b-116c5ac2d2b5.png?resize=1490%2C324"
+        alt="子仓库"/></a></p>
+<h3 id="更新">更新</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git submodule update --init --recursive
+</code></pre></div><p>会同时更新父仓库和嵌套的子仓库 。最好加上rebase 参数或者.gitmoudles添加update = rebase。默认更新策略是checkout，从子仓库打一个新分支出来，然后更新，最终导致head detached。</p>
+<h3 id="克隆">克隆</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git clone --recursive &lt;project url&gt;
+</code></pre></div><h3 id="移除">移除</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git rm -r  &lt;file&gt;..
+</code></pre></div><p>​		这会移除子仓库所有文件。如果想保留子仓库文件，请修改.gitmodules文件 ，和移除子仓库的.git文件。</p>
+<h3 id="转化成子仓库">转化成子仓库</h3>
+<p>​		官网教程太复杂，建议先增一个仓库，再把这个仓库变成子仓库。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/"target="_blank">hosting-on-github</a></li>
+<li><a href="https://github.blog/2016-02-01-working-with-submodules/"target="_blank">git submodule</a></li>
+</ul>
+</article><section class="article labels"><a class="category" href=/categories/technical/>technical</a><a class="tag" href=/tags/blog/>blog</a><a class="tag" href=/tags/git/>git</a></section></div><section class="article navigation"><p><a class="link" href="/post/%E8%A3%85%E4%BA%86%E5%95%A5/"><span class="li">&larr;</span>装了啥</a></p></section></div><section id="footer" class="footer"><div class="footer-wrap">
+    <p class="copyright">©2020 Notepadium.</p>
+    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p>
+</div></section></div>
+</body>
+
+</html>
