@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.69.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark"><title>为什么mybatis的mapper没有实现类&nbsp;&ndash;&nbsp;jdiop&#39;blog</title><link rel="stylesheet" href="/css/core.min.96c00237413bedc5f3b4492ac3a19d4c4ca67cd2d17cb537ae443bdf32e8ac1ec15c2d5bbc83854baa211b076bae2cd1.css" integrity="sha384-lsACN0E77cXztEkqw6GdTEymfNLRfLU3rkQ73zLorB7BXC1bvIOFS6ohGwdrrizR"><body>
     <div class="base-body"><section id="header" class="site header">
@@ -7,193 +7,63 @@
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about/">About</a></nav></div></span></div></section><div id="content"><div class="article-container"><section class="article header">
     <h1 class="article title">为什么mybatis的mapper没有实现类</h1><p class="article date">Feb 04, 2020</p></section><article class="article markdown-body"><h3 id="环境">环境</h3>
 <p>本文基于springboot ,mybatis的sql采用xml形式，<a href="https://github.com/jdiop417/spring-learning.git"target="_blank">项目地址</a></p>
-<h3 id="原理简介">原理简介</h3>
-<ol>
-<li>
-<p>Map&lt;Class<?>, MapperProxyFactory<?>&gt; knownMappers存放了mapper接口，和对应的xml代理类（jdk代理）</p>
-</li>
-<li>
-<p>每一个mapper接口实例化后都是sqlSession，调用mapper就是调用sqlSession，sqlSession从knownMappers中找到对应的sql语句</p>
-<p>大量应用了jdk代理和FactroyBean</p>
-</li>
-</ol>
-<h3 id="sqlsession初始化过程">sqlSession初始化过程</h3>
-<ol>
-<li>
-<p>入口：MybatisAutoConfiguration类配置了SqlSessionFactory</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Bean</span>
-<span class="nd">@ConditionalOnMissingBean</span>
-<span class="kd">public</span> <span class="n">SqlSessionFactory</span> <span class="nf">sqlSessionFactory</span><span class="o">(</span><span class="n">DataSource</span> <span class="n">dataSource</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-  <span class="n">SqlSessionFactoryBean</span> <span class="n">factory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SqlSessionFactoryBean</span><span class="o">();</span>
-   
-  <span class="err">#</span> <span class="err">。。。。</span><span class="n">省略部分代码</span>
-       
-  <span class="err">#</span> <span class="n">getObject</span><span class="o">()</span><span class="n">就是初始化sqlSession过程</span>  
-  <span class="k">return</span> <span class="n">factory</span><span class="o">.</span><span class="na">getObject</span><span class="o">();</span>
-<span class="o">}</span> 
-   
-</code></pre></div><p>最终会调用SqlSessionFactoryBean.buildSqlSessionFactory（）方法，这个方法会调用XMLConfigBuilder.parse() 目的是构建 Configuration。Configuration 主要存储 Mybatis 所有的配置信息，当然也会有Mapper代理对象。而parse（）方法 又会调用bindMapperForNamespace()</p>
-</li>
-<li>
-<p>bindMapperForNamespace，在SqlSessionFactoryBean中</p>
-<div class="highlight"><pre class="chroma"><code class="language-JAVA" data-lang="JAVA"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">bindMapperForNamespace</span><span class="o">()</span> <span class="o">{</span>
-  <span class="c1">//namespace 为对应的mapper
-</span><span class="c1"></span>  <span class="n">String</span> <span class="n">namespace</span> <span class="o">=</span> <span class="n">builderAssistant</span><span class="o">.</span><span class="na">getCurrentNamespace</span><span class="o">();</span>
-  <span class="k">if</span> <span class="o">(</span><span class="n">namespace</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">boundType</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-    <span class="k">try</span> <span class="o">{</span>
-      <span class="n">boundType</span> <span class="o">=</span> <span class="n">Resources</span><span class="o">.</span><span class="na">classForName</span><span class="o">(</span><span class="n">namespace</span><span class="o">);</span>
-    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ClassNotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-      <span class="c1">//ignore, bound type is not required
-</span><span class="c1"></span>    <span class="o">}</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">boundType</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-      <span class="k">if</span> <span class="o">(!</span><span class="n">configuration</span><span class="o">.</span><span class="na">hasMapper</span><span class="o">(</span><span class="n">boundType</span><span class="o">))</span> <span class="o">{</span>
-        <span class="c1">// Spring may not know the real resource name so we set a flag
-</span><span class="c1"></span>        <span class="c1">// to prevent loading again this resource from the mapper interface
-</span><span class="c1"></span>        <span class="c1">// look at MapperAnnotationBuilder#loadXmlResource
-</span><span class="c1"></span>        <span class="n">configuration</span><span class="o">.</span><span class="na">addLoadedResource</span><span class="o">(</span><span class="s">&#34;namespace:&#34;</span> <span class="o">+</span> <span class="n">namespace</span><span class="o">);</span>
-           
-        <span class="c1">//添加到knownMappers中
-</span><span class="c1"></span>        <span class="n">configuration</span><span class="o">.</span><span class="na">addMapper</span><span class="o">(</span><span class="n">boundType</span><span class="o">);</span>
+<h3 id="基础">基础</h3>
+<p>1.mybatis的dao层只有一个接口和对应的xml。通过java代理转化为jdbc的sql语句。</p>
+<p>2.mybatis和spring的结合，入口是@MapperScann。通过BeanFactoryPostProcesser偷梁换柱，注册成其他类，用factorybean生成mapperproxy。</p>
+<h3 id="mapper底层是如何工作的">Mapper底层是如何工作的</h3>
+<p>MapperProxy实现了InvocationHandler，在invoke方法中调用<code>mapperMethod.execute(sqlSession, args)</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">Object</span> <span class="nf">execute</span><span class="o">(</span><span class="n">SqlSession</span> <span class="n">sqlSession</span><span class="o">,</span> <span class="n">Object</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Object</span> <span class="n">result</span><span class="o">;</span>
+    <span class="k">switch</span> <span class="o">(</span><span class="n">command</span><span class="o">.</span><span class="na">getType</span><span class="o">())</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="n">INSERT</span><span class="o">:</span> <span class="o">{</span>
+        <span class="n">Object</span> <span class="n">param</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">convertArgsToSqlCommandParam</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">rowCountResult</span><span class="o">(</span><span class="n">sqlSession</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">command</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">param</span><span class="o">));</span>
+        <span class="k">break</span><span class="o">;</span>
       <span class="o">}</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></li>
-</ol>
-<p>​      addMapper最终会调用MapperRegistry的addMapper方法</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">addMapper</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
-  <span class="k">if</span> <span class="o">(</span><span class="n">type</span><span class="o">.</span><span class="na">isInterface</span><span class="o">())</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">hasMapper</span><span class="o">(</span><span class="n">type</span><span class="o">))</span> <span class="o">{</span>
-      <span class="k">throw</span> <span class="k">new</span> <span class="n">BindingException</span><span class="o">(</span><span class="s">&#34;Type &#34;</span> <span class="o">+</span> <span class="n">type</span> <span class="o">+</span> <span class="s">&#34; is already known to the MapperRegistry.&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-    <span class="kt">boolean</span> <span class="n">loadCompleted</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-    <span class="k">try</span> <span class="o">{</span>
-      <span class="n">knownMappers</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">type</span><span class="o">,</span> <span class="k">new</span> <span class="n">MapperProxyFactory</span><span class="o">&lt;&gt;(</span><span class="n">type</span><span class="o">));</span>
-      <span class="c1">// It&#39;s important that the type is added before the parser is run
-</span><span class="c1"></span>      <span class="c1">// otherwise the binding may automatically be attempted by the
-</span><span class="c1"></span>      <span class="c1">// mapper parser. If the type is already known, it won&#39;t try.
-</span><span class="c1"></span>      <span class="n">MapperAnnotationBuilder</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MapperAnnotationBuilder</span><span class="o">(</span><span class="n">config</span><span class="o">,</span> <span class="n">type</span><span class="o">);</span>
-      <span class="n">parser</span><span class="o">.</span><span class="na">parse</span><span class="o">();</span>
-      <span class="n">loadCompleted</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
-      <span class="k">if</span> <span class="o">(!</span><span class="n">loadCompleted</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">knownMappers</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">type</span><span class="o">);</span>
+      <span class="k">case</span> <span class="n">UPDATE</span><span class="o">:</span> <span class="o">{</span>
+        <span class="n">Object</span> <span class="n">param</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">convertArgsToSqlCommandParam</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">rowCountResult</span><span class="o">(</span><span class="n">sqlSession</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">command</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">param</span><span class="o">));</span>
+        <span class="k">break</span><span class="o">;</span>
       <span class="o">}</span>
+      <span class="k">case</span> <span class="n">DELETE</span><span class="o">:</span> <span class="o">{</span>
+        <span class="n">Object</span> <span class="n">param</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">convertArgsToSqlCommandParam</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">rowCountResult</span><span class="o">(</span><span class="n">sqlSession</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">command</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">param</span><span class="o">));</span>
+        <span class="k">break</span><span class="o">;</span>
+      <span class="o">}</span>
+      <span class="k">case</span> <span class="n">SELECT</span><span class="o">:</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">returnsVoid</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">method</span><span class="o">.</span><span class="na">hasResultHandler</span><span class="o">())</span> <span class="o">{</span>
+          <span class="n">executeWithResultHandler</span><span class="o">(</span><span class="n">sqlSession</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+          <span class="n">result</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">returnsMany</span><span class="o">())</span> <span class="o">{</span>
+          <span class="n">result</span> <span class="o">=</span> <span class="n">executeForMany</span><span class="o">(</span><span class="n">sqlSession</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">returnsMap</span><span class="o">())</span> <span class="o">{</span>
+          <span class="n">result</span> <span class="o">=</span> <span class="n">executeForMap</span><span class="o">(</span><span class="n">sqlSession</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">returnsCursor</span><span class="o">())</span> <span class="o">{</span>
+          <span class="n">result</span> <span class="o">=</span> <span class="n">executeForCursor</span><span class="o">(</span><span class="n">sqlSession</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+          <span class="n">Object</span> <span class="n">param</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">convertArgsToSqlCommandParam</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+          <span class="n">result</span> <span class="o">=</span> <span class="n">sqlSession</span><span class="o">.</span><span class="na">selectOne</span><span class="o">(</span><span class="n">command</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">param</span><span class="o">);</span>
+          <span class="k">if</span> <span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">returnsOptional</span><span class="o">()</span>
+              <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="o">!</span><span class="n">method</span><span class="o">.</span><span class="na">getReturnType</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">getClass</span><span class="o">())))</span> <span class="o">{</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+          <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">break</span><span class="o">;</span>
+      <span class="k">case</span> <span class="n">FLUSH</span><span class="o">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">sqlSession</span><span class="o">.</span><span class="na">flushStatements</span><span class="o">();</span>
+        <span class="k">break</span><span class="o">;</span>
+      <span class="k">default</span><span class="o">:</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">BindingException</span><span class="o">(</span><span class="s">&#34;Unknown execution method for: &#34;</span> <span class="o">+</span> <span class="n">command</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
     <span class="o">}</span>
-  <span class="o">}</span>
-<span class="o">}</span>   
-</code></pre></div><p>knownMappers放入了接口类，和对应的MapperProxy</p>
-<h3 id="mapper初始化">mapper初始化</h3>
-<ol>
-<li>
-<p>我们从@MapperScan注解开始，该注解导入了MapperScannerRegistrar类</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">registerBeanDefinitions</span><span class="o">(</span><span class="n">AnnotationAttributes</span> <span class="n">annoAttrs</span><span class="o">,</span> <span class="n">BeanDefinitionRegistry</span> <span class="n">registry</span><span class="o">,</span> <span class="n">String</span> <span class="n">beanName</span><span class="o">)</span> <span class="o">{</span>
-   
-  <span class="n">BeanDefinitionBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="n">BeanDefinitionBuilder</span><span class="o">.</span><span class="na">genericBeanDefinition</span><span class="o">(</span><span class="n">MapperScannerConfigurer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-  <span class="n">builder</span><span class="o">.</span><span class="na">addPropertyValue</span><span class="o">(</span><span class="s">&#34;processPropertyPlaceHolders&#34;</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-   
-  <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Annotation</span><span class="o">&gt;</span> <span class="n">annotationClass</span> <span class="o">=</span> <span class="n">annoAttrs</span><span class="o">.</span><span class="na">getClass</span><span class="o">(</span><span class="s">&#34;annotationClass&#34;</span><span class="o">);</span>
-  <span class="k">if</span> <span class="o">(!</span><span class="n">Annotation</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">annotationClass</span><span class="o">))</span> <span class="o">{</span>
-    <span class="n">builder</span><span class="o">.</span><span class="na">addPropertyValue</span><span class="o">(</span><span class="s">&#34;annotationClass&#34;</span><span class="o">,</span> <span class="n">annotationClass</span><span class="o">);</span>
-  <span class="o">}</span>
-   
-  <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">markerInterface</span> <span class="o">=</span> <span class="n">annoAttrs</span><span class="o">.</span><span class="na">getClass</span><span class="o">(</span><span class="s">&#34;markerInterface&#34;</span><span class="o">);</span>
-  <span class="k">if</span> <span class="o">(!</span><span class="n">Class</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">markerInterface</span><span class="o">))</span> <span class="o">{</span>
-    <span class="n">builder</span><span class="o">.</span><span class="na">addPropertyValue</span><span class="o">(</span><span class="s">&#34;markerInterface&#34;</span><span class="o">,</span> <span class="n">markerInterface</span><span class="o">);</span>
-  <span class="o">}</span>
-   
-  <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BeanNameGenerator</span><span class="o">&gt;</span> <span class="n">generatorClass</span> <span class="o">=</span> <span class="n">annoAttrs</span><span class="o">.</span><span class="na">getClass</span><span class="o">(</span><span class="s">&#34;nameGenerator&#34;</span><span class="o">);</span>
-  <span class="k">if</span> <span class="o">(!</span><span class="n">BeanNameGenerator</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">generatorClass</span><span class="o">))</span> <span class="o">{</span>
-    <span class="n">builder</span><span class="o">.</span><span class="na">addPropertyValue</span><span class="o">(</span><span class="s">&#34;nameGenerator&#34;</span><span class="o">,</span> <span class="n">BeanUtils</span><span class="o">.</span><span class="na">instantiateClass</span><span class="o">(</span><span class="n">generatorClass</span><span class="o">));</span>
-  <span class="o">}</span>
-   
-  <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">MapperFactoryBean</span><span class="o">&gt;</span> <span class="n">mapperFactoryBeanClass</span> <span class="o">=</span> <span class="n">annoAttrs</span><span class="o">.</span><span class="na">getClass</span><span class="o">(</span><span class="s">&#34;factoryBean&#34;</span><span class="o">);</span>
-  <span class="k">if</span> <span class="o">(!</span><span class="n">MapperFactoryBean</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">mapperFactoryBeanClass</span><span class="o">))</span> <span class="o">{</span>
-    <span class="n">builder</span><span class="o">.</span><span class="na">addPropertyValue</span><span class="o">(</span><span class="s">&#34;mapperFactoryBeanClass&#34;</span><span class="o">,</span> <span class="n">mapperFactoryBeanClass</span><span class="o">);</span>
-  <span class="o">}</span>
-   
-  <span class="n">String</span> <span class="n">sqlSessionTemplateRef</span> <span class="o">=</span> <span class="n">annoAttrs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;sqlSessionTemplateRef&#34;</span><span class="o">);</span>
-  <span class="k">if</span> <span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">hasText</span><span class="o">(</span><span class="n">sqlSessionTemplateRef</span><span class="o">))</span> <span class="o">{</span>
-    <span class="n">builder</span><span class="o">.</span><span class="na">addPropertyValue</span><span class="o">(</span><span class="s">&#34;sqlSessionTemplateBeanName&#34;</span><span class="o">,</span> <span class="n">annoAttrs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;sqlSessionTemplateRef&#34;</span><span class="o">));</span>
-  <span class="o">}</span>
-   
-  <span class="n">String</span> <span class="n">sqlSessionFactoryRef</span> <span class="o">=</span> <span class="n">annoAttrs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;sqlSessionFactoryRef&#34;</span><span class="o">);</span>
-  <span class="k">if</span> <span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">hasText</span><span class="o">(</span><span class="n">sqlSessionFactoryRef</span><span class="o">))</span> <span class="o">{</span>
-    <span class="n">builder</span><span class="o">.</span><span class="na">addPropertyValue</span><span class="o">(</span><span class="s">&#34;sqlSessionFactoryBeanName&#34;</span><span class="o">,</span> <span class="n">annoAttrs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;sqlSessionFactoryRef&#34;</span><span class="o">));</span>
-  <span class="o">}</span>
-   
-  <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">basePackages</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
-  <span class="n">basePackages</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span>
-      <span class="n">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">annoAttrs</span><span class="o">.</span><span class="na">getStringArray</span><span class="o">(</span><span class="s">&#34;value&#34;</span><span class="o">)).</span><span class="na">filter</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">::</span><span class="n">hasText</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">()));</span>
-   
-  <span class="n">basePackages</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">annoAttrs</span><span class="o">.</span><span class="na">getStringArray</span><span class="o">(</span><span class="s">&#34;basePackages&#34;</span><span class="o">)).</span><span class="na">filter</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">::</span><span class="n">hasText</span><span class="o">)</span>
-      <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">()));</span>
-   
-  <span class="n">basePackages</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">annoAttrs</span><span class="o">.</span><span class="na">getClassArray</span><span class="o">(</span><span class="s">&#34;basePackageClasses&#34;</span><span class="o">)).</span><span class="na">map</span><span class="o">(</span><span class="n">ClassUtils</span><span class="o">::</span><span class="n">getPackageName</span><span class="o">)</span>
-      <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">()));</span>
-   
-  <span class="n">String</span> <span class="n">lazyInitialization</span> <span class="o">=</span> <span class="n">annoAttrs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&#34;lazyInitialization&#34;</span><span class="o">);</span>
-  <span class="k">if</span> <span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">hasText</span><span class="o">(</span><span class="n">lazyInitialization</span><span class="o">))</span> <span class="o">{</span>
-    <span class="n">builder</span><span class="o">.</span><span class="na">addPropertyValue</span><span class="o">(</span><span class="s">&#34;lazyInitialization&#34;</span><span class="o">,</span> <span class="n">lazyInitialization</span><span class="o">);</span>
-  <span class="o">}</span>
-   
-  <span class="n">builder</span><span class="o">.</span><span class="na">addPropertyValue</span><span class="o">(</span><span class="s">&#34;basePackage&#34;</span><span class="o">,</span> <span class="n">StringUtils</span><span class="o">.</span><span class="na">collectionToCommaDelimitedString</span><span class="o">(</span><span class="n">basePackages</span><span class="o">));</span>
-   
-  <span class="n">registry</span><span class="o">.</span><span class="na">registerBeanDefinition</span><span class="o">(</span><span class="n">beanName</span><span class="o">,</span> <span class="n">builder</span><span class="o">.</span><span class="na">getBeanDefinition</span><span class="o">());</span>
-   
-<span class="o">}</span>
-</code></pre></div><p>用builder模式选择加载需要的的配置文件，buidler是用MapperScannerConfigurer构建的，MapperScannerConfigurer实现了BeanDefinitionRegistryPostProcessor</p>
-</li>
-<li>
-<p>设置mapper的MapperFactoryBeanClass</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Override</span>
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">postProcessBeanDefinitionRegistry</span><span class="o">(</span><span class="n">BeanDefinitionRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
-  <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">processPropertyPlaceHolders</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">processPropertyPlaceHolders</span><span class="o">();</span>
-  <span class="o">}</span>
-   
-  <span class="n">ClassPathMapperScanner</span> <span class="n">scanner</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathMapperScanner</span><span class="o">(</span><span class="n">registry</span><span class="o">);</span>
-  <span class="n">scanner</span><span class="o">.</span><span class="na">setAddToConfig</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">addToConfig</span><span class="o">);</span>
-  <span class="n">scanner</span><span class="o">.</span><span class="na">setAnnotationClass</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">annotationClass</span><span class="o">);</span>
-  <span class="n">scanner</span><span class="o">.</span><span class="na">setMarkerInterface</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">markerInterface</span><span class="o">);</span>
-  <span class="n">scanner</span><span class="o">.</span><span class="na">setSqlSessionFactory</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">sqlSessionFactory</span><span class="o">);</span>
-  <span class="n">scanner</span><span class="o">.</span><span class="na">setSqlSessionTemplate</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">sqlSessionTemplate</span><span class="o">);</span>
-  <span class="n">scanner</span><span class="o">.</span><span class="na">setSqlSessionFactoryBeanName</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">sqlSessionFactoryBeanName</span><span class="o">);</span>
-  <span class="n">scanner</span><span class="o">.</span><span class="na">setSqlSessionTemplateBeanName</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">sqlSessionTemplateBeanName</span><span class="o">);</span>
-  <span class="n">scanner</span><span class="o">.</span><span class="na">setResourceLoader</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">applicationContext</span><span class="o">);</span>
-  <span class="n">scanner</span><span class="o">.</span><span class="na">setBeanNameGenerator</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">nameGenerator</span><span class="o">);</span>
-  <span class="n">scanner</span><span class="o">.</span><span class="na">setMapperFactoryBeanClass</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">mapperFactoryBeanClass</span><span class="o">);</span>
-  <span class="k">if</span> <span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">hasText</span><span class="o">(</span><span class="n">lazyInitialization</span><span class="o">))</span> <span class="o">{</span>
-    <span class="n">scanner</span><span class="o">.</span><span class="na">setLazyInitialization</span><span class="o">(</span><span class="n">Boolean</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">lazyInitialization</span><span class="o">));</span>
-  <span class="o">}</span>
-  <span class="n">scanner</span><span class="o">.</span><span class="na">registerFilters</span><span class="o">();</span>
-  <span class="n">scanner</span><span class="o">.</span><span class="na">scan</span><span class="o">(</span>
-      <span class="n">StringUtils</span><span class="o">.</span><span class="na">tokenizeToStringArray</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">basePackage</span><span class="o">,</span> <span class="n">ConfigurableApplicationContext</span><span class="o">.</span><span class="na">CONFIG_LOCATION_DELIMITERS</span><span class="o">));</span>
-<span class="o">}</span>
-</code></pre></div></li>
-</ol>
-<p>重点关注setMapperFactoryBeanClass，这意味着什么呢？以departmentMapper为例，意味着当前的mapper接口在Spring容器中，beanName是departmentMapper，beanClass是MapperFactoryBean.class。那么在IOC初始化的时候，实例化的对象就是MapperFactoryBean对象。而FactoryBean对象实际就是getObject（）的返回值</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">T</span> <span class="nf">getObject</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-  <span class="k">return</span> <span class="n">getSqlSession</span><span class="o">().</span><span class="na">getMapper</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">mapperInterface</span><span class="o">);</span>
-<span class="o">}</span>
-</code></pre></div><p>而这个getMapper最终调用的MapperRegistry.getMapper方法</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">getMapper</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">type</span><span class="o">,</span> <span class="n">SqlSession</span> <span class="n">sqlSession</span><span class="o">)</span> <span class="o">{</span>
-  <span class="kd">final</span> <span class="n">MapperProxyFactory</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">mapperProxyFactory</span> <span class="o">=</span> <span class="o">(</span><span class="n">MapperProxyFactory</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)</span> <span class="n">knownMappers</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">type</span><span class="o">);</span>
-  <span class="k">if</span> <span class="o">(</span><span class="n">mapperProxyFactory</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">throw</span> <span class="k">new</span> <span class="n">BindingException</span><span class="o">(</span><span class="s">&#34;Type &#34;</span> <span class="o">+</span> <span class="n">type</span> <span class="o">+</span> <span class="s">&#34; is not known to the MapperRegistry.&#34;</span><span class="o">);</span>
-  <span class="o">}</span>
-  <span class="k">try</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">mapperProxyFactory</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="n">sqlSession</span><span class="o">);</span>
-  <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">throw</span> <span class="k">new</span> <span class="n">BindingException</span><span class="o">(</span><span class="s">&#34;Error getting mapper instance. Cause: &#34;</span> <span class="o">+</span> <span class="n">e</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
-  <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div><p>里面是jdk代理，从knownMappers获取代理，knownMappers在上面已经讲过了。</p>
-<h3 id="参考">参考</h3>
+</code></pre></div><p><a target="_blank" rel="noopener noreferrer" 
+  href="https://i.loli.net/2021/02/15/OU8ZgCpcxDIFn6H.png"><img  src="https://i.loli.net/2021/02/15/OU8ZgCpcxDIFn6H.png"
+        alt="image-20210215161130524"/></a></p>
+<h3 id="mapper-是如何注册到spring中的">mapper 是如何注册到spring中的</h3>
+<p><a target="_blank" rel="noopener noreferrer" 
+  href="https://i.loli.net/2021/02/15/hHuSgtfYdbN312A.png"><img  src="https://i.loli.net/2021/02/15/hHuSgtfYdbN312A.png"
+        alt="image-20210215160930162"/></a></p>
 <ul>
-<li><a href="https://juejin.im/post/5c84b4395188257e342db6eb#heading-4"target="_blank">Mybatis源码分析（四）mapper接口方法是怎样被调用到的</a></li>
-<li><a href="https://www.jianshu.com/p/ea8b7f80ea55"target="_blank">为什么mybatis的mapper没有实现类</a></li>
+<li>《MyBatis技术内幕》</li>
 </ul>
 </article><section class="article labels"><a class="category" href=/categories/technical/>technical</a><a class="tag" href=/tags/spring/>spring</a><a class="tag" href=/tags/mybatis/>mybatis</a></section></div><section class="article navigation"><p><a class="link" href="/post/%E7%89%9B%E5%AE%A2%E7%BD%91%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A8%8B%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/"><span class="li">&larr;</span>牛客网在线编程遇到的坑</a></p><p><a class="link" href="/post/%E8%A3%85%E4%BA%86%E5%95%A5/"><span class="li">&rarr;</span>装了啥</a></p></section></div><section id="footer" class="footer"><div class="footer-wrap">
     <p class="copyright">©2020 Notepadium.</p>
