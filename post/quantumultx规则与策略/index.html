@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.88.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>QuantumultX规则与策略&nbsp;&ndash;&nbsp;jdiop&#39;blog</title><link rel="stylesheet" href="/css/core.min.42e4675bfd30ed680169460c3ced7c82635304ab804a93c84b53068c0858786595a90345705aa6c83e98565a6b4f4f2e.css" integrity="sha384-QuRnW/0w7WgBaUYMPO18gmNTBKuASpPIS1MGjAhYeGWVqQNFcFqmyD6YVlprT08u"><body>
+    <div class="base-body"><section id="header" class="site header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">jdiop'blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about/">About</a></nav></div></span></div></section><div id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">QuantumultX规则与策略</h1><p class="article date">Sep 05, 2021</p></section><article class="article markdown-body"><h2 id="背景">背景</h2>
+<p>每次打开淘宝几秒钟广告，切到其他app，它还能再给你弹个广告。其他app也好不到哪里去，所以有了去广告的想法，而分流刚好可以实现这个。但是大佬写的神机规则默认没有启动去广告。开始折腾起了分流规则，折腾好了后倒是没用过淘宝了，改用拼多多和咸鱼了。淘宝真的太难用了。</p>
+<h2 id="流程">流程</h2>
+<p><a target="_blank" rel="noopener noreferrer" 
+  href="https://cdn.jsdelivr.net/gh/jdiop417/pic@master/uPic/QuantumultX_conf.png"><img  src="https://cdn.jsdelivr.net/gh/jdiop417/pic@master/uPic/QuantumultX_conf.png"
+        alt="QuantumultX_conf"/></a></p>
+<p>自用的规则与策略如上，规则与策略本质是为了分流，控制哪些网站能要使用代理，哪些不使用代理，哪些拒绝访问。</p>
+<h3 id="规则">规则</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># Global 全球加速</span><span class="w">
+</span><span class="w"></span><span class="l">https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Global.list, tag=🇺🇳Global, force-policy=Agent, update-interval=86400, opt-parser=true, enabled=true</span><span class="w">
+</span></code></pre></div><p>一条完整的规则实例</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Global.list 表示标识的网站</span><span class="w">
+</span></code></pre></div><p>tag=🇺🇳Global 则是标识的网站取了一个别名</p>
+<p>force-policy=Agent 选择的策略</p>
+<h3 id="策略">策略</h3>
+<pre tabindex="0"><code>static=Agent, Auto, proxy, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Proxy.png
+</code></pre><p>static=Agent 表示策略的名字</p>
+<p>Auto, proxy 表示该策略下的选项，Quantmult x自带3个策略分别是proxy，direct 和reject。而策略有可以套娃，agent就是一个策略，改策略下有proxy 和 auto。auto又是一个策略，具体的说上延迟测试(url-latency-benchmark)，指向具有最佳 URL 延迟(公差，单位毫秒)结果的服务器。</p>
+<p>url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Proxy.png 一个图标而已</p>
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/DivineEngine/Profiles/tree/master/Quantumult"target="_blank">神机规则-quantumult</a></p>
+</article><section class="article labels"><a class="category" href=/categories/technical/>technical</a><a class="category" href=/categories/life/>life</a><a class="tag" href=/tags/proxy/>proxy</a><a class="tag" href=/tags/network/>network</a></section></div><section class="article navigation"><p><a class="link" href="/post/hhkb%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/"><span class="li">&rarr;</span>Hhkb使用心得</a></p></section></div><section id="footer" class="footer"><div class="footer-wrap">
+    <p class="copyright">©2020 Notepadium.</p>
+    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p>
+</div></section></div>
+</body>
+
+</html>

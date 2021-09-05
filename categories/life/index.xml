@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>©2020 Notepadium.</copyright>
-    <lastBuildDate>Tue, 31 Aug 2021 00:35:04 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 05 Sep 2021 15:04:16 +0800</lastBuildDate>
     
         <atom:link href="/categories/life/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>QuantumultX规则与策略</title>
+      <link>/post/quantumultx%E8%A7%84%E5%88%99%E4%B8%8E%E7%AD%96%E7%95%A5/</link>
+      <pubDate>Sun, 05 Sep 2021 15:04:16 +0800</pubDate>
+      
+      <guid>/post/quantumultx%E8%A7%84%E5%88%99%E4%B8%8E%E7%AD%96%E7%95%A5/</guid>
+      <description>背景 每次打开淘宝几秒钟广告，切到其他app，它还能再给你弹个广告。其他app也好不到哪里去，所以有了去广告的想法，而分流刚好可以实现这个。但</description>
+      
+    </item>
     
     <item>
       <title>Hhkb使用心得</title>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.87.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.88.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark"><title>牛客网在线编程遇到的坑&nbsp;&ndash;&nbsp;jdiop&#39;blog</title><link rel="stylesheet" href="/css/core.min.42e4675bfd30ed680169460c3ced7c82635304ab804a93c84b53068c0858786595a90345705aa6c83e98565a6b4f4f2e.css" integrity="sha384-QuRnW/0w7WgBaUYMPO18gmNTBKuASpPIS1MGjAhYeGWVqQNFcFqmyD6YVlprT08u"><body>
     <div class="base-body"><section id="header" class="site header">
@@ -13,17 +13,17 @@
 (1) 同一秒内，若时间不同，选最早的，若存在时间相同，选择多个;
 (2) 不同时间，选则时间最早的;</p>
 <p>输入描述:</p>
-<pre><code>n行字符串
+<pre tabindex="0"><code>n行字符串
 </code></pre><p>输出描述:</p>
-<pre><code>整数
+<pre tabindex="0"><code>整数
 </code></pre><p>示例1:
 输入</p>
-<pre><code>1992-08-20 12:12:12.001
+<pre tabindex="0"><code>1992-08-20 12:12:12.001
 1992-08-20 12:12:12.003
 1992-08-20 12:12:12.203
 1992-08-21 12:12:12.001 
 </code></pre><p>输出</p>
-<pre><code>2
+<pre tabindex="0"><code>2
 </code></pre><h2 id="分析">分析</h2>
 <p>题目一看不难。然后发现给出的示例和规则不符，规则2是不同时间选最早的，时间最早的是1992-08-20 12:12:12.001。输出该为1，实际输出为2。示例的分明是按日期来的，找到当天抢票数，然后累加的。幸好前一天准备一下，刷了牛客网的题。知道这种情况按示例的来。那么规则就改一下：
 规则:
